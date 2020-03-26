@@ -60,7 +60,8 @@ class Game extends React.Component {
         }
       ],
       stepNumber: 0,
-      xIsNext: true
+      xIsNext: true,
+      isAscending: true
     };
   }
 
@@ -91,12 +92,18 @@ class Game extends React.Component {
     });
   }
 
+  setSortAscending(isAscending) {
+    this.setState({
+      isAscending: isAscending
+    })
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
+    let moves = history.map((step, move) => {
       let desc = move ?
         'Go to move #' + move + ' (' + step.lastMove + ')' :
         'Go to game start';
@@ -109,6 +116,10 @@ class Game extends React.Component {
         </li>
       );
     });
+
+    if (!this.state.isAscending) {
+      moves = moves.reverse();
+    }
 
     let status;
     if (winner) {
@@ -127,7 +138,15 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <div>
+            <div>
+              <button onClick={() => this.setSortAscending(true)}>Ascending</button>
+              <button onClick={() => this.setSortAscending(false)}>Descending</button>
+            </div>
+            <ol className="game-moves">
+              {moves}
+            </ol>
+          </div>
         </div>
       </div>
     );
