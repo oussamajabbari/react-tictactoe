@@ -22,7 +22,7 @@ class Board extends React.Component {
   }
 
   render() {
-    // let rows = [];
+    // let rows = [ ];
     // for (let i = 0; i < 3; i++) {
     //   let columns = []
     //   for (let j = 0; j < 3; j++) {
